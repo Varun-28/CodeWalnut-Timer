@@ -3,6 +3,7 @@ import { X, Clock } from 'lucide-react';
 import { useTimerStore } from '../store/useTimerStore';
 import { validateTimerForm } from '../utils/validation';
 import { Timer } from '../types/timer';
+import Button from './Button';
 
 interface TimerModalProps {
   isOpen: boolean;
@@ -116,17 +117,17 @@ export const TimerModal: React.FC<TimerModalProps> = ({
           <div className="flex items-center gap-2">
             <Clock className="w-5 h-5 text-blue-600" />
             <h2 className="text-xl font-semibold">
-              {isEdit ? 'Edit Timer' : 'Add New Timer'}
+              {isEdit ? "Edit Timer" : "Add New Timer"}
             </h2>
           </div>
-          <button 
+          <Button
             onClick={handleClose}
-            className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-1 hover:bg-gray-100 rounded-full"
           >
             <X className="w-5 h-5" />
-          </button>
+          </Button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -140,8 +141,8 @@ export const TimerModal: React.FC<TimerModalProps> = ({
               maxLength={50}
               className={`w-full px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                 touched.title && !isTitleValid
-                  ? 'border-red-500'
-                  : 'border-gray-300'
+                  ? "border-red-500"
+                  : "border-gray-300"
               }`}
               placeholder="Enter timer title"
             />
@@ -174,68 +175,82 @@ export const TimerModal: React.FC<TimerModalProps> = ({
             </label>
             <div className="grid grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm text-gray-600 mb-1">Hours</label>
+                <label className="block text-sm text-gray-600 mb-1">
+                  Hours
+                </label>
                 <input
                   type="number"
                   min="0"
                   max="23"
                   value={hours}
-                  onChange={(e) => setHours(Math.min(23, parseInt(e.target.value) || 0))}
+                  onChange={(e) =>
+                    setHours(Math.min(23, parseInt(e.target.value) || 0))
+                  }
                   onBlur={() => setTouched({ ...touched, hours: true })}
                   className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-600 mb-1">Minutes</label>
+                <label className="block text-sm text-gray-600 mb-1">
+                  Minutes
+                </label>
                 <input
                   type="number"
                   min="0"
                   max="59"
                   value={minutes}
-                  onChange={(e) => setMinutes(Math.min(59, parseInt(e.target.value) || 0))}
+                  onChange={(e) =>
+                    setMinutes(Math.min(59, parseInt(e.target.value) || 0))
+                  }
                   onBlur={() => setTouched({ ...touched, minutes: true })}
                   className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-600 mb-1">Seconds</label>
+                <label className="block text-sm text-gray-600 mb-1">
+                  Seconds
+                </label>
                 <input
                   type="number"
                   min="0"
                   max="59"
                   value={seconds}
-                  onChange={(e) => setSeconds(Math.min(59, parseInt(e.target.value) || 0))}
+                  onChange={(e) =>
+                    setSeconds(Math.min(59, parseInt(e.target.value) || 0))
+                  }
                   onBlur={() => setTouched({ ...touched, seconds: true })}
                   className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
             </div>
-            {touched.hours && touched.minutes && touched.seconds && !isTimeValid && (
-              <p className="mt-2 text-sm text-red-500">
-                Please set a duration greater than 0
-              </p>
-            )}
+            {touched.hours &&
+              touched.minutes &&
+              touched.seconds &&
+              !isTimeValid && (
+                <p className="mt-2 text-sm text-red-500">
+                  Please set a duration greater than 0
+                </p>
+              )}
           </div>
-          
+
           <div className="flex justify-end gap-3 pt-4 border-t">
-            <button
-              type="button"
+            <Button
               onClick={handleClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+              className="text-gray-700 bg-gray-100 hover:bg-gray-200"
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
-              className={`px-4 py-2 text-sm font-medium text-white rounded-md transition-colors ${
-                isTitleValid && isTimeValid
-                  ? 'bg-blue-600 hover:bg-blue-700'
-                  : 'bg-blue-400 cursor-not-allowed'
-              }`}
               disabled={!isTitleValid || !isTimeValid}
+              className={`${
+                isTitleValid && isTimeValid
+                  ? "bg-blue-600 hover:bg-blue-700"
+                  : "bg-blue-400"
+              } text-white`}
             >
-              {isEdit ? 'Save Changes' : 'Add Timer'}
-            </button>
+              Add Timer
+            </Button>
           </div>
         </form>
       </div>
